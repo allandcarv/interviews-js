@@ -12,8 +12,7 @@ interface SquaresProps {
 export const Squares: FC<SquaresProps> = ({ columns, rows }) => {
   const numOfSquares = columns * rows;
 
-  const { isSquareActive, onAddActiveSquare, onRemoveActiveSquare } =
-    useActiveSquare();
+  const { isSquareActive, onToggleActiveSquare } = useActiveSquare();
 
   return (
     <div
@@ -27,8 +26,7 @@ export const Squares: FC<SquaresProps> = ({ columns, rows }) => {
         <Square
           key={i}
           isSquareActive={isSquareActive(i)}
-          onAddSquare={() => onAddActiveSquare(i)}
-          onRemoveSquare={() => onRemoveActiveSquare(i)}
+          onToggleActiveSquare={() => onToggleActiveSquare(i)}
         />
       ))}
     </div>

@@ -1,39 +1,41 @@
 import { useState } from 'react';
 
 export const useActiveSquare = () => {
-  const [activeSquares, setActiveSquares] = useState(new Set<number>());
+  const [activeSquares, setActiveSquares] = useState(new Set<number>([]));
 
-  const isSquareActive = (index: number) => activeSquares.has(index);
+  const onToggleActiveSquare = (index: number) => {
+    const hasReachedLimit = activeSquares.size === 5;
+    const isActive = activeSquares.has(index);
 
-  const onAddActiveSquare = (index: number) => {
-    setActiveSquares((prev) => {
-      const hasIndex = isSquareActive(index);
+    if (hasReachedLimit && !isActive) {
+      setActiveSquares(new Set<number>([]));
 
-      if (hasIndex) {
-        return prev;
-      }
+      return;
+    }
 
-      if (prev.size === 5) {
-        return new Set();
-      }
+    if (isActive) {
+      setActiveSquares((prev) => {
+        prev.delete(index);
 
-      prev.add(index);
+        return new Set(prev);
+      });
+    } else {
+      setActiveSquares((prev) => {
+        prev.add(index);
 
-      return new Set(prev);
-    });
+        return new Set(prev);
+      });
+    }
   };
 
-  const onRemoveActiveSquare = (index: number) => {
-    setActiveSquares((prev) => {
-      prev.delete(index);
+  const isSquareActive = (index: number) => {
+    const isSquareActive = activeSquares.has(index);
 
-      return new Set(prev);
-    });
+    return isSquareActive;
   };
 
   return {
-    onAddActiveSquare,
-    onRemoveActiveSquare,
+    onToggleActiveSquare,
     isSquareActive,
   };
 };

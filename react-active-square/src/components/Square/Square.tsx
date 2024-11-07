@@ -3,24 +3,20 @@ import type { FC } from 'react';
 import styles from './Square.module.css';
 
 interface SquareProps {
-  onAddSquare: () => void;
-  onRemoveSquare: () => void;
+  onToggleActiveSquare: () => void;
   isSquareActive: boolean;
 }
 
 export const Square: FC<SquareProps> = ({
   isSquareActive,
-  onAddSquare,
-  onRemoveSquare,
+  onToggleActiveSquare,
 }) => {
-  const onClickHandler = isSquareActive ? onRemoveSquare : onAddSquare;
-
   return (
     <div
       className={`${styles['square']} ${
         isSquareActive ? styles['active'] : ''
       }`}
-      onClick={onClickHandler}
+      onClick={onToggleActiveSquare}
     />
   );
 };
